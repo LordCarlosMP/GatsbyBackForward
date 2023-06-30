@@ -1,16 +1,33 @@
 import * as React from 'react';
+import {navigate} from 'gatsby';
+import {Router} from '@reach/router';
 
 const IndexPage = () => {
   console.log('Re-rendering');
-  return <button onClick={() => {
-    window.history.pushState({state: "newBrowserHistoryState"}, '', '');
-    // it also happens with this:
-    // const popStateEvent = new PopStateEvent('popstate',
-    //     {state: "newBrowserHistoryState"});
-    // dispatchEvent(popStateEvent);
-  }}>
+
+  return <Router>
+    <Button path="/"/>
+  </Router>;
+};
+
+const Button = () => {
+  console.log('Re-rendering button');
+  return <button
+      onClick={() => {
+        navigate('/',
+            {
+              state: 'newBrowserHistoryState',
+              replace: true,
+            },
+        );
+      }}>
+    <Child/>
     Button
   </button>;
+};
+const Child = () => {
+  console.log('Re-rendering child');
+  return <div>Child</div>;
 };
 
 export default IndexPage;
